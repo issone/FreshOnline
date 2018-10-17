@@ -15,10 +15,10 @@ import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# 把extra_apps和apps标记为sources root,在settings中也要加路径
-sys.path.insert(0,BASE_DIR)
-sys.path.insert(0,os.path.join(BASE_DIR,'apps'))
-sys.path.insert(0,os.path.join(BASE_DIR,'extra_apps'))
+# 把extra_apps和apps标记为sources root,在settings中也要加路径,为了导入app时更方法
+sys.path.insert(0, BASE_DIR)
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+sys.path.insert(0, os.path.join(BASE_DIR, 'extra_apps'))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
@@ -30,7 +30,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-AUTH_USER_MODEL = 'users.UserProfile'   #重载系统的用户，让UserProfile生效
+AUTH_USER_MODEL = 'users.UserProfile'  # 重载系统的用户，让UserProfile生效
 
 # Application definition
 
@@ -45,7 +45,10 @@ INSTALLED_APPS = [
     'user_operation',
     'goods',
     'trade',
-    'DjangoUeditor'
+    'DjangoUeditor',
+    'xadmin',
+    'crispy_forms'
+
 ]
 
 MIDDLEWARE = [
@@ -127,3 +130,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = "/media/"
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")  # 设置media的保存路径
