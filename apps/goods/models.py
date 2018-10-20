@@ -5,11 +5,12 @@ from DjangoUeditor.models import UEditorField
 
 
 # Create your models here.
-
+# help_text: 是生成接口测试文档时会用到的。
+# related_name: 在后面进行查询的时候会用到
 
 class GoodsCategory(models.Model):
     """
-    商品类别
+    商品多级分类
     """
     CATEGORY_TYPE = (
         (1, "一级类目"),
@@ -36,7 +37,7 @@ class GoodsCategory(models.Model):
 
 class GoodsCategoryBrand(models.Model):
     """
-    品牌名
+   某一大类下的宣传商标
     """
     category = models.ForeignKey(GoodsCategory, on_delete=models.CASCADE, related_name='brands', null=True, blank=True,
                                  verbose_name="商品类目")
@@ -46,7 +47,7 @@ class GoodsCategoryBrand(models.Model):
     add_time = models.DateTimeField(default=datetime.now, verbose_name="添加时间")
 
     class Meta:
-        verbose_name = "品牌"
+        verbose_name = "宣传品牌"
         verbose_name_plural = verbose_name
         db_table = "goods_goodsbrand"
 
@@ -114,7 +115,7 @@ class GoodsImage(models.Model):
 
 class Banner(models.Model):
     """
-    轮播的商品
+    首页轮播的商品图，为适配首页大图
     """
     goods = models.ForeignKey(Goods, on_delete=models.CASCADE, verbose_name="商品")
     image = models.ImageField(upload_to='banner', verbose_name="轮播图片")
@@ -122,7 +123,7 @@ class Banner(models.Model):
     add_time = models.DateTimeField(default=datetime.now, verbose_name="添加时间")
 
     class Meta:
-        verbose_name = '轮播商品'
+        verbose_name = '首页轮播商品'
         verbose_name_plural = verbose_name
 
     def __str__(self):

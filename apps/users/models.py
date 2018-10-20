@@ -8,7 +8,7 @@ from django.contrib.auth.models import AbstractUser
 
 class UserProfile(AbstractUser):
     """
-    用户
+    用户表，新增字段如下,此时我们的userprofile并没有生效,需要在settings中设置AUTH_USER_MODEL
     """
     name = models.CharField(max_length=30, null=True, blank=True, verbose_name='姓名')
     birthday = models.DateField(null=True, blank=True, verbose_name='出生年月')
@@ -27,7 +27,7 @@ class UserProfile(AbstractUser):
 
 class VerifyCode(models.Model):
     """
-    短信验证码
+    短信验证码,回填验证码进行验证。可以保存在redis中
     """
     code = models.CharField(max_length=10, verbose_name="验证码")
     mobile = models.CharField(max_length=11, verbose_name="电话")
