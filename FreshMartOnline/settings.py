@@ -28,7 +28,7 @@ SECRET_KEY = 'o-@m#e=nm@l&1@5j0j-%5-$9h3r_aq9^63nspizsg-lgy8-#-&'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']   # 添加允许访问的地址，*表示所有
+ALLOWED_HOSTS = ['*']  # 添加允许访问的地址，*表示所有
 
 AUTH_USER_MODEL = 'users.UserProfile'  # 重载系统的用户，让UserProfile生效
 
@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'trade',
     'DjangoUeditor',
     'xadmin',
-    'crispy_forms'
+    'crispy_forms',
+    'rest_framework',
 
 ]
 
