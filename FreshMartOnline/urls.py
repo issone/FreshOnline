@@ -25,7 +25,7 @@ from FreshMartOnline.settings import MEDIA_ROOT
 # from goods.views import GoodsListView,
 # from goods.views_base import GoodsListView
 
-from goods.views import GoodsListViewSet
+from goods.views import GoodsListViewSet, CategoryViewSet
 
 # goods_list = GoodsListViewSet.as_view({
 #     'get': 'list',
@@ -35,6 +35,9 @@ router = DefaultRouter()
 
 # 配置goods的url
 router.register(r'goods', GoodsListViewSet)
+
+# 配置Category的url
+router.register(r'categorys', CategoryViewSet, base_name="categorys")
 
 urlpatterns = [
     path(r'xadmin/', xadmin.site.urls),
