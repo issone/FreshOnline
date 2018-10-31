@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/2.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.1/ref/settings/
 """
-
+import datetime
 import os
 import sys
 
@@ -51,11 +51,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'corsheaders',
+    'rest_framework.authtoken',
 
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',    # 要放的尽可能靠前，在csrfview之前。
+    'corsheaders.middleware.CorsMiddleware',  # 要放的尽可能靠前，在csrfview之前。
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -64,6 +65,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (
+    '127.0.0.1:8081',
+)
 
 ROOT_URLCONF = 'FreshMartOnline.urls'
 
@@ -141,3 +147,32 @@ STATICFILES_DIRS = (
 )
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")  # 设置media的保存路径
+
+# 设置邮箱和用户名和手机号均可登录, jwt接口它默认采用的是用户名和密码登录验证，如果用手机登录的话，就会验证失败，所以我们需要自定义一个用户验证
+AUTHENTICATION_BACKENDS = (
+    'users.views.CustomBackend',  # 使用自定义用户验证规则
+)
+
+# 所有与drf相关的设置写在这里面
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+    ),
+
+}
+
+# 与drf的jwt相关的设置
+
+
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),  # 也可以设置seconds=20
+    'JWT_AUTH_HEADER_PREFIX': 'JWT',  # 这里的header前缀我们要保持与前端的一致，比如“token”这里设置成JWT
+}
+
+# 手机号码正则表达式
+REGEX_MOBILE = "^1[35678]\d{9}$|^147\d{8}$|^176\d{8}$"
+
+# 云片网设置
+APIKEY = 'apikey的值'

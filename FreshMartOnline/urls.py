@@ -20,12 +20,15 @@ from django.views.static import serve
 import xadmin
 from rest_framework.documentation import include_docs_urls
 from rest_framework.routers import DefaultRouter
+from rest_framework.authtoken import views
+from rest_framework_jwt.views import obtain_jwt_token
 
 from FreshMartOnline.settings import MEDIA_ROOT
 # from goods.views import GoodsListView,
 # from goods.views_base import GoodsListView
 
 from goods.views import GoodsListViewSet, CategoryViewSet
+from users.views import SmsCodeViewset, UserViewset
 
 # goods_list = GoodsListViewSet.as_view({
 #     'get': 'list',
@@ -38,6 +41,12 @@ router.register(r'goods', GoodsListViewSet)
 
 # 配置Category的url
 router.register(r'categorys', CategoryViewSet, base_name="categorys")
+
+# 配置codes的url
+router.register(r'code', SmsCodeViewset, base_name="codes")
+
+# # 配置users的url
+router.register(r'users', UserViewset, base_name="users")
 
 urlpatterns = [
     path(r'xadmin/', xadmin.site.urls),
@@ -56,4 +65,8 @@ urlpatterns = [
     path('docs', include_docs_urls(title='生鲜超市文档')),
     # 调试登录
     path('api-auth/', include('rest_framework.urls')),
+    # drf自带的token授权登录,获取token需要向该地址post数据
+    path('api-token-auth/', views.obtain_auth_token),
+    # jwt的token认证接口
+    path('login/', obtain_jwt_token)
 ]

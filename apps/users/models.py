@@ -14,7 +14,8 @@ class UserProfile(AbstractUser):
     birthday = models.DateField(null=True, blank=True, verbose_name='出生年月')
     gender = models.CharField(max_length=6, choices=(('male', '男'), ('female', '女')), default='female',
                               verbose_name='性别')
-    mobile = models.CharField(max_length=11, verbose_name='电话')
+    mobile = models.CharField(null=True, blank=True, max_length=11, verbose_name='电话')
+    # 因为前端只有手机号码这一个值。而这个值还存在username中。所以需要置空，保证验证成功。
     email = models.EmailField(max_length=100, null=True, blank=True, verbose_name='邮箱')
 
     class Meta:
